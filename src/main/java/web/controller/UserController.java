@@ -35,13 +35,13 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/edit")
     public String edit(Model model, @RequestParam("id") Long id) {
         model.addAttribute("user", us.getUserById(id));
         return "users/edit";
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/")
     public String update(@ModelAttribute("person") User user, @RequestParam("id") Long id) {
         us.updateUserById(user, id);
         return "redirect:/users";
@@ -51,5 +51,11 @@ public class UserController {
     public String show(@RequestParam("id") Long id, Model model) {
         model.addAttribute("user", us.getUserById(id));
         return "users/show";
+    }
+
+    @PostMapping("/show")
+    public String delete(@RequestParam("id") Long id) {
+        us.deleteUserById(id);
+        return "redirect:/users";
     }
 }
