@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public class UserDaoImp implements UserDao {
-   @PersistenceContext(type= PersistenceContextType.EXTENDED)
+   @PersistenceContext(type= PersistenceContextType.TRANSACTION)
    private EntityManager em;
 
    //@Autowired
@@ -23,7 +23,8 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public void deleteUserById(Long id) {
-      User user = getUserById(id);
+      //User user = em.find(User.class, id);
+      User user = em.getReference(User.class, id);
       em.remove(user);
    }
 
