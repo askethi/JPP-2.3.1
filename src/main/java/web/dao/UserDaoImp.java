@@ -13,9 +13,6 @@ public class UserDaoImp implements UserDao {
    @PersistenceContext(type= PersistenceContextType.TRANSACTION)
    private EntityManager em;
 
-   //@Autowired
-   //private SessionFactory sessionFactory;
-
    @Override
    public void add(User user) {
       em.persist(user);
@@ -23,24 +20,19 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public void deleteUserById(Long id) {
-      //User user = em.find(User.class, id);
-      User user = em.getReference(User.class, id);
+      User user = em.find(User.class, id);
       em.remove(user);
    }
 
    @Override
    @SuppressWarnings("unchecked")
    public List<User> listUsers() {
-      //TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
-      //return query.getResultList();
       return em.createQuery("select u from User u", User.class).getResultList();
    }
 
    @Override
    public User getUserById(Long id) {
-      //User user = sessionFactory.getCurrentSession().get(User.class, id);
-      User user = em.find(User.class, id);
-      return user;
+      return em.find(User.class, id);
 
    }
 
