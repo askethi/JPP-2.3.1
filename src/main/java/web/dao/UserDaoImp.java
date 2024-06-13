@@ -20,7 +20,9 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public void deleteUserById(Long id) {
-      User user = em.find(User.class, id);
+      User user = new User();
+      user.setId(id);
+      //em.find(User.class, id);
       em.remove(user);
    }
 
@@ -33,7 +35,6 @@ public class UserDaoImp implements UserDao {
    @Override
    public User getUserById(Long id) {
       return em.find(User.class, id);
-
    }
 
    @Override
