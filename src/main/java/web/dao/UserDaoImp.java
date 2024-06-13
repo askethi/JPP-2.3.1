@@ -29,7 +29,11 @@ public class UserDaoImp implements UserDao {
    @Override
    @SuppressWarnings("unchecked")
    public List<User> listUsers() {
-      return em.createQuery("select u from User u", User.class).getResultList();
+      List<User> result =  em.createQuery("select u from User u", User.class).getResultList();
+      return result.stream().filter(u -> u.getFirstName() != null).toList();
+      //Dirty solution..
+      //В методе удаления remove() и delete-query на выходе дают update по null'ям и не удаляют запись, сохраняя строку с id.
+      //3 дня рыл, безуспешно.. Наведите на мысль, please!)
    }
 
    @Override
