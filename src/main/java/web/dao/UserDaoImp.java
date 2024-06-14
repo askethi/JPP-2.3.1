@@ -20,20 +20,14 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public void deleteUserById(Long id) {
-      User user = new User();
-      user.setId(id);
-      //em.find(User.class, id);
+      User user = em.find(User.class, id);
       em.remove(user);
    }
 
    @Override
    @SuppressWarnings("unchecked")
    public List<User> listUsers() {
-      List<User> result =  em.createQuery("select u from User u", User.class).getResultList();
-      return result.stream().filter(u -> u.getFirstName() != null).toList();
-      //Dirty solution..
-      //В методе удаления remove() и delete-query на выходе дают update по null'ям и не удаляют запись, сохраняя строку с id.
-      //3 дня рыл, безуспешно.. Наведите на мысль, please!)
+      return em.createQuery("select u from User u", User.class).getResultList();
    }
 
    @Override
